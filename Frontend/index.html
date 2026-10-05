@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101828">
+  <meta name="description" content="GrowthOS merchant intelligence and business analytics dashboard">
+  <title>GrowthOS | Merchant Intelligence</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Mobile sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="GrowthOS home" data-view-link="dashboard">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="2" y="2" width="28" height="28" rx="9" fill="currentColor"/>
+            <path d="M10 17.5 14 21l8-10" fill="none" stroke="#101828"
+              stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-name">Growth<span>OS</span></span>
+      </a>
+
+      <div class="workspace-switcher">
+        <div class="workspace-avatar">M</div>
+        <div class="workspace-info">
+          <strong>Merchant Workspace</strong>
+          <span>Business account</span>
+        </div>
+        <span class="workspace-chevron">⌄</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <p class="nav-label">WORKSPACE</p>
+
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="11" width="7" height="10" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg>
+          </span>
+          <span>Overview</span>
+        </button>
+
+        <button class="nav-item" data-view="transactions">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+          </span>
+          <span>Transactions</span>
+          <span class="nav-count">8.4k</span>
+        </button>
+
+        <button class="nav-item" data-view="customers">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          <span>Customers</span>
+        </button>
+
+        <p class="nav-label nav-label-spaced">INTELLIGENCE</p>
+
+        <button class="nav-item" data-view="insights">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-4 12.74V19h8v-3.26A7 7 0 0 0 12 3Z"/><path d="M9 22h6M9 16h6M12 7v4M10 9h4"/></svg>
+          </span>
+          <span>AI Insights</span>
+          <span class="nav-new">AI</span>
+        </button>
+
+        <button class="nav-item" data-view="campaigns">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 11v2a2 2 0 0 0 2 2h2l10 5V4L7 9H5a2 2 0 0 0-2 2Z"/><path d="m7 15 2 6h4l-2-4M21 9l-2 2 2 2"/></svg>
+          </span>
+          <span>Campaigns</span>
+        </button>
+
+        <button class="nav-item" data-view="forecasting">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 3 6-8"/></svg>
+          </span>
+          <span>Forecasting</span>
+        </button>
+
+        <p class="nav-label nav-label-spaced">PREFERENCES</p>
+
+        <button class="nav-item" data-view="settings">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 0 1-1.5.9L16 21h-8l-.3-2.1a8 8 0 0 1-1.5-.9l-1.7.6-1.4-2.4 1.4-1.1a8 8 0 0 1 0-2.2l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 0 1 1.5-.9L8 7h8l.3 2.1a8 8 0 0 1 1.5.9l1.7-.6 1.4 2.4-1.4 1.1a8 8 0 0 1-.1 2.1Z"/></svg>
+          </span>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="upgrade-card">
+          <div class="upgrade-icon">✦</div>
+          <strong>Unlock more insights</strong>
+          <p>Explore advanced analytics and growth opportunities.</p>
+          <button class="upgrade-button" id="upgradeButton">Explore features <span>→</span></button>
+        </div>
+
+        <div class="profile">
+          <div class="profile-avatar">AM</div>
+          <div class="profile-info">
+            <strong>Alex Morgan</strong>
+            <span>Store administrator</span>
+          </div>
+          <button class="icon-button profile-menu" aria-label="Profile options" id="profileButton">···</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Open navigation">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span>Workspace</span>
+            <span class="breadcrumb-divider">/</span>
+            <strong id="breadcrumbCurrent">Overview</strong>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="demo-indicator"><span></span> Demo data</span>
+          <button class="icon-button notification-button" id="notificationButton" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="topbar-avatar">AM</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Dashboard -->
+        <section class="view-section active" id="view-dashboard">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">MONDAY, OCTOBER 05, 2026</p>
+              <h1>Good morning, Alex <span class="wave">✦</span></h1>
+              <p class="page-subtitle">Here's what's happening with your business today.</p>
+            </div>
+            <div class="heading-actions">
+              <button class="button button-secondary" id="exportButton">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></svg>
+                Export report
+              </button>
+              <button class="button button-primary" id="newCampaignButton">
+                <span>＋</span> New campaign
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-context">
+              <span class="status-dot"></span>
+              <span>Business performance</span>
+            </div>
+            <div class="range-selector" role="group" aria-label="Select date range">
+              <button class="range-button" data-range="7d">7 days</button>
+              <button class="range-button active" data-range="30d">30 days</button>
+              <button class="range-button" data-range="90d">90 days</button>
+            </div>
+          </div>
+
+          <!-- KPI cards -->
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Total revenue</span>
+                <span class="stat-icon stat-icon-teal">
+                  <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </span>
+              </div>
+              <div class="stat-value" id="revenueValue">₹12,84,500</div>
+              <div class="stat-bottom">
+                <span class="trend trend-up" id="revenueTrend">↑ 12.8%</span>
+                <span class="stat-comparison">vs. previous period</span>
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Transactions</span>
+                <span class="stat-icon stat-icon-blue">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+                </span>
+              </div>
+              <div class="stat-value" id="transactionsValue">8,492</div>
+              <div class="stat-bottom">
+                <span class="trend trend-up" id="transactionsTrend">↑ 8.2%</span>
+                <span class="stat-comparison">vs. previous period</span>
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Active customers</span>
+                <span class="stat-icon stat-icon-purple">
+                  <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+              </div>
+              <div class="stat-value" id="customersValue">2,340</div>
+              <div class="stat-bottom">
+                <span class="trend trend-up" id="customersTrend">↑ 5.6%</span>
+                <span class="stat-comparison">vs. previous period</span>
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Average order value</span>
+                <span class="stat-icon stat-icon-orange">
+                  <svg viewBox="0 0 24 24"><path d="M3 3h2l2.5 12h10.8L21 7H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                </span>
+              </div>
+              <div class="stat-value" id="aovValue">₹1,513</div>
+              <div class="stat-bottom">
+                <span class="trend trend-up" id="aovTrend">↑ 3.4%</span>
+                <span class="stat-comparison">vs. previous period</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Charts -->
+          <div class="analytics-grid">
+            <article class="panel revenue-panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Revenue overview</h2>
+                  <p class="panel-subtitle">Track your revenue performance over time</p>
+                </div>
+                <button class="select-button" id="chartMetricButton">Revenue <span>⌄</span></button>
+              </div>
+              <div class="chart-summary">
+                <div>
+                  <strong id="chartRevenue">₹12.84L</strong>
+                  <span class="trend trend-up">↑ 12.8%</span>
+                </div>
+                <span class="chart-period" id="chartPeriod">Last 30 days</span>
+              </div>
+              <div class="chart-container">
+                <div class="chart-y-labels" aria-hidden="true">
+                  <span>₹15L</span>
+                  <span>₹10L</span>
+                  <span>₹5L</span>
+                  <span>₹0</span>
+                </div>
+                <div class="chart-plot">
+                  <svg id="revenueChart" viewBox="0 0 700 250" preserveAspectRatio="none"
+                       role="img" aria-label="Revenue trend line chart">
+                    <defs>
+                      <linearGradient id="revenueFill" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#0D9488" stop-opacity=".20"/>
+                        <stop offset="100%" stop-color="#0D9488" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <g class="chart-grid-lines">
+                      <line x1="0" y1="12" x2="700" y2="12"/>
+                      <line x1="0" y1="85" x2="700" y2="85"/>
+                      <line x1="0" y1="158" x2="700" y2="158"/>
+                      <line x1="0" y1="230" x2="700" y2="230"/>
+                    </g>
+                    <path id="chartArea" class="chart-area" d=""/>
+                    <path id="chartLine" class="chart-line" d=""/>
+                    <g id="chartPoints"></g>
+                  </svg>
+                  <div class="chart-x-labels" id="chartLabels">
+                    <span>Sep 06</span><span>Sep 11</span><span>Sep 16</span>
+                    <span>Sep 21</span><span>Sep 26</span><span>Oct 01</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <span><i class="legend-dot"></i> Revenue</span>
+                <span class="legend-muted">Illustrative data</span>
+              </div>
+            </article>
+
+            <article class="panel channel-panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Sales channels</h2>
+                  <p class="panel-subtitle">Revenue by payment channel</p>
+                </div>
+                <button class="icon-button more-button" aria-label="More channel options">···</button>
+              </div>
+              <div class="donut-wrap">
+                <div class="donut-chart" role="img" aria-label="Sales channel distribution">
+                  <div class="donut-center">
+                    <span>Total sales</span>
+                    <strong>₹12.8L</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="channel-legend">
+                <div class="channel-row">
+                  <span class="channel-name"><i class="channel-color channel-upi"></i> UPI</span>
+                  <strong>52%</strong>
+                </div>
+                <div class="channel-row">
+                  <span class="channel-name"><i class="channel-color channel-card"></i> Cards</span>
+                  <strong>28%</strong>
+                </div>
+                <div class="channel-row">
+                  <span class="channel-name"><i class="channel-color channel-cash"></i> Cash</span>
+                  <strong>14%</strong>
+                </div>
+                <div class="channel-row">
+                  <span class="channel-name"><i class="channel-color channel-other"></i> Other</span>
+                  <strong>6%</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Insights and transactions -->
+          <div class="lower-grid">
+            <article class="panel insights-panel">
+              <div class="panel-header">
+                <div>
+                  <div class="title-with-icon">
+                    <span class="ai-sparkle">✦</span>
+                    <h2>AI business insights</h2>
+                  </div>
+                  <p class="panel-subtitle">Highlights from your business data</p>
+                </div>
+                <button class="text-button" data-view-link="insights">View all →</button>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-indicator insight-indicator-green">↗</div>
+                <div class="insight-content">
+                  <strong>Revenue is trending upward</strong>
+                  <p>Revenue is up 12.8% compared with the previous period in this demo dataset.</p>
+                  <span class="insight-tag">REVENUE</span>
+                </div>
+              </div>
+              <div class="insight-item">
+                <div class="insight-indicator insight-indicator-blue">◎</div>
+                <div class="insight-content">
+                  <strong>Returning customers contribute to sales</strong>
+                  <p>Review repeat-purchase trends to identify customer retention opportunities.</p>
+                  <span class="insight-tag">CUSTOMERS</span>
+                </div>
+              </div>
+              <div class="insight-item">
+                <div class="insight-indicator insight-indicator-purple">✦</div>
+                <div class="insight-content">
+                  <strong>Consider a targeted campaign</strong>
+                  <p>Try a campaign for customers who have not purchased recently.</p>
+                  <span class="insight-tag">GROWTH IDEA</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel transactions-panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Recent transactions</h2>
+                  <p class="panel-subtitle">Your latest customer payments</p>
+                </div>
+                <button class="text-button" data-view-link="transactions">View all →</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentTransactionsBody">
+                    <tr>
+                      <td><div class="customer-cell"><span class="table-avatar avatar-teal">RS</span><span><strong>Rahul Shah</strong><small>TXN-1001</small></span></div></td>
+                      <td class="amount-cell">₹2,450</td>
+                      <td><span class="status-badge status-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="customer-cell"><span class="table-avatar avatar-purple">SP</span><span><strong>Simran Patel</strong><small>TXN-1002</small></span></div></td>
+                      <td class="amount-cell">₹1,800</td>
+                      <td><span class="status-badge status-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="customer-cell"><span class="table-avatar avatar-orange">AK</span><span><strong>Arjun Kumar</strong><small>TXN-1003</small></span></div></td>
+                      <td class="amount-cell">₹3,200</td>
+                      <td><span class="status-badge status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="customer-cell"><span class="table-avatar avatar-blue">PM</span><span><strong>Priya Mehta</strong><small>TXN-1004</small></span></div></td>
+                      <td class="amount-cell">₹950</td>
+                      <td><span class="status-badge status-success">Completed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Transactions view -->
+        <section class="view-section" id="view-transactions">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">BUSINESS ACTIVITY</p>
+              <h1>Transactions</h1>
+              <p class="page-subtitle">Review and search your payment history.</p>
+            </div>
+            <button class="button button-secondary" id="transactionExport">
+              ↓ Export CSV
+            </button>
+          </div>
+          <div class="stats-grid stats-grid-three">
+            <article class="stat-card">
+              <span class="stat-label">Total transactions</span>
+              <div class="stat-value">8,492</div>
+              <span class="stat-comparison">Demo period</span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Successful payments</span>
+              <div class="stat-value">8,210</div>
+              <span class="stat-comparison">Illustrative data</span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Pending / failed</span>
+              <div class="stat-value">282</div>
+              <span class="stat-comparison">Illustrative data</span>
+            </article>
+          </div>
+          <article class="panel full-panel">
+            <div class="panel-header transactions-toolbar">
+              <div>
+                <h2>All transactions</h2>
+                <p class="panel-subtitle">Search through sample payment records.</p>
+              </div>
+              <div class="table-controls">
+                <label class="search-box">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                  <input type="search" id="transactionSearch" placeholder="Search transactions..." aria-label="Search transactions">
+                </label>
+                <select id="statusFilter" class="filter-select" aria-label="Filter by status">
+                  <option value="all">All statuses</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Failed">Failed</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="full-table">
+                <thead>
+                  <tr>
+                    <th>Transaction ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Payment method</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionsBody"></tbody>
+              </table>
+              <div class="empty-state" id="emptyTransactions" hidden>
+                <span>⌕</span>
+                <strong>No transactions found</strong>
+                <p>Try a different search or status filter.</p>
+              </div>
+            </div>
+            <div class="table-footer">
+              <span id="transactionCount">Showing transactions</span>
+              <span class="demo-note">Sample records only</span>
+            </div>
+          </article>
+        </section>
+
+        <!-- Customers view -->
+        <section class="view-section" id="view-customers">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">CUSTOMER INTELLIGENCE</p>
+              <h1>Customers</h1>
+              <p class="page-subtitle">Understand customer activity and engagement.</p>
+            </div>
+          </div>
+          <div class="stats-grid stats-grid-three">
+            <article class="stat-card"><span class="stat-label">Total customers</span><div class="stat-value">2,340</div><span class="stat-comparison">Sample data</span></article>
+            <article class="stat-card"><span class="stat-label">Returning customers</span><div class="stat-value">1,120</div><span class="stat-comparison">Sample data</span></article>
+            <article class="stat-card"><span class="stat-label">Retention rate</span><div class="stat-value">47.9%</div><span class="stat-comparison">Illustrative metric</span></article>
+          </div>
+          <article class="panel full-panel">
+            <div class="panel-header">
+              <div><h2>Customer segments</h2><p class="panel-subtitle">Example segmentation for the merchant.</p></div>
+            </div>
+            <div class="segment-grid">
+              <div class="segment-card"><span class="segment-mark segment-vip">✦</span><strong>VIP customers</strong><b>320</b><p>Frequent, high-value customers</p></div>
+              <div class="segment-card"><span class="segment-mark segment-loyal">◎</span><strong>Loyal customers</strong><b>800</b><p>Regular repeat purchasers</p></div>
+              <div class="segment-card"><span class="segment-mark segment-new">＋</span><strong>New customers</strong><b>740</b><p>Recently acquired customers</p></div>
+              <div class="segment-card"><span class="segment-mark segment-risk">⌁</span><strong>At-risk customers</strong><b>480</b><p>May need re-engagement</p></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- AI insights view -->
+        <section class="view-section" id="view-insights">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">INTELLIGENCE CENTER</p>
+              <h1>AI Insights</h1>
+              <p class="page-subtitle">Explore business observations and growth ideas.</p>
+            </div>
+          </div>
+          <div class="ai-banner">
+            <div class="ai-banner-icon">✦</div>
+            <div><strong>Your merchant intelligence center</strong><p>These are example insights, not live AI-generated conclusions. Later, we'll connect this interface to verified analytics and an LLM.</p></div>
+          </div>
+          <div class="insight-cards-grid">
+            <article class="panel insight-large"><span class="insight-tag">REVENUE</span><h2>Revenue performance</h2><p>Your sample dataset shows revenue growth over the selected period. Investigate which products and days contribute most to this change.</p><span class="insight-foot">Suggested analysis · Revenue trends</span></article>
+            <article class="panel insight-large"><span class="insight-tag">RETENTION</span><h2>Customer engagement</h2><p>Review repeat purchases and recency to find customers who may benefit from re-engagement.</p><span class="insight-foot">Suggested analysis · Customer cohorts</span></article>
+            <article class="panel insight-large"><span class="insight-tag">CAMPAIGNS</span><h2>Targeted promotions</h2><p>Test relevant offers with a small customer segment and compare results with a control group.</p><span class="insight-foot">Suggested experiment · Campaign testing</span></article>
+          </div>
+        </section>
+
+        <!-- Campaigns view -->
+        <section class="view-section" id="view-campaigns">
+          <div class="page-heading">
+            <div><p class="eyebrow">GROWTH AUTOMATION</p><h1>Campaigns</h1><p class="page-subtitle">Draft and manage merchant marketing campaigns.</p></div>
+            <button class="button button-primary" id="campaignCreateButton">＋ Create campaign</button>
+          </div>
+          <div class="ai-banner">
+            <div class="ai-banner-icon">✦</div>
+            <div><strong>Campaign workspace</strong><p>Campaigns are simulated in this frontend. No real messages will be sent.</p></div>
+          </div>
+          <article class="panel full-panel">
+            <div class="panel-header"><div><h2>Your campaigns</h2><p class="panel-subtitle">Example campaign drafts</p></div></div>
+            <div class="campaign-list" id="campaignList">
+              <div class="campaign-row"><div class="campaign-symbol campaign-symbol-teal">↗</div><div class="campaign-description"><strong>Win-back customers</strong><span>Re-engagement · Draft</span></div><span class="campaign-status">Draft</span><button class="button button-secondary campaign-edit">Review</button></div>
+              <div class="campaign-row"><div class="campaign-symbol campaign-symbol-purple">✦</div><div class="campaign-description"><strong>Loyalty appreciation</strong><span>Retention · Draft</span></div><span class="campaign-status">Draft</span><button class="button button-secondary campaign-edit">Review</button></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Forecasting view -->
+        <section class="view-section" id="view-forecasting">
+          <div class="page-heading"><div><p class="eyebrow">PREDICTIVE ANALYTICS</p><h1>Forecasting</h1><p class="page-subtitle">Explore example revenue forecasts and trends.</p></div></div>
+          <div class="ai-banner"><div class="ai-banner-icon">⌁</div><div><strong>Forecasting workspace</strong><p>These are illustrative estimates for the interface only, not predictions from a trained model.</p></div></div>
+          <div class="stats-grid stats-grid-three">
+            <article class="stat-card"><span class="stat-label">Projected revenue</span><div class="stat-value">₹14.2L</div><span class="stat-comparison">Illustrative estimate</span></article>
+            <article class="stat-card"><span class="stat-label">Expected transactions</span><div class="stat-value">9,100</div><span class="stat-comparison">Illustrative estimate</span></article>
+            <article class="stat-card"><span class="stat-label">Forecast horizon</span><div class="stat-value">30 days</div><span class="stat-comparison">Demo configuration</span></article>
+          </div>
+          <article class="panel full-panel"><h2>Forecasting workflow</h2><p class="panel-subtitle">Later, this page will display results returned by your FastAPI model inference endpoint, with confidence intervals and model evaluation metrics.</p></article>
+        </section>
+
+        <!-- Settings view -->
+        <section class="view-section" id="view-settings">
+          <div class="page-heading"><div><p class="eyebrow">PREFERENCES</p><h1>Settings</h1><p class="page-subtitle">Manage your workspace preferences.</p></div></div>
+          <article class="panel settings-panel">
+            <h2>Merchant profile</h2>
+            <p class="panel-subtitle">Example profile information for this local demo.</p>
+            <div class="settings-form">
+              <label>Business name<input type="text" value="Merchant Workspace" id="businessName"></label>
+              <label>Administrator<input type="text" value="Alex Morgan" id="adminName"></label>
+              <label>Currency<select id="currencySetting"><option value="INR">Indian Rupee (INR)</option></select></label>
+              <button class="button button-primary" id="saveSettings">Save changes</button>
+            </div>
+          </article>
+        </section>
+
+        <footer class="page-footer">
+          <span>© 2026 GrowthOS · Merchant Intelligence</span>
+          <span><i class="footer-dot"></i> Frontend demo · Sample data</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Campaign modal -->
+  <div class="modal-backdrop" id="campaignModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div><h2 id="modalTitle">Create campaign</h2><p>Draft a campaign for your customers.</p></div>
+        <button class="icon-button" id="closeModal" aria-label="Close dialog">×</button>
+      </div>
+      <form id="campaignForm">
+        <label class="form-label">Campaign name
+          <input type="text" id="campaignName" placeholder="e.g. Weekend special offer" required maxlength="80">
+        </label>
+        <label class="form-label">Campaign type
+          <select id="campaignType">
+            <option>Customer retention</option>
+            <option>Win-back</option>
+            <option>New customer offer</option>
+            <option>Loyalty appreciation</option>
+          </select>
+        </label>
+        <label class="form-label">Campaign message
+          <textarea id="campaignMessage" rows="4" placeholder="Write your campaign message..." maxlength="500"></textarea>
+        </label>
+        <p class="modal-note">This creates a local draft only. No messages will be sent.</p>
+        <div class="modal-actions">
+          <button type="button" class="button button-secondary" id="cancelModal">Cancel</button>
+          <button type="submit" class="button button-primary">Save draft</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
